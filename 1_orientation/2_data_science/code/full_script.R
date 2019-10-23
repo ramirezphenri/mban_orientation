@@ -75,7 +75,6 @@ jp_only <- filter(listings, neighbourhood == 'Jamaica Plain')
 jp_sorted  <- arrange(jp_only, desc(review_scores_rating))
 # Select only the columns we want to see               
 jp_best <- select(jp_sorted, neighbourhood, name, review_scores_rating) 
-jp_best
 
 # Problem: this code wastes:
 # 1. **Headspace** to think of names for the intermediate steps ("jp_only", "jp_sorted") that we don't 
@@ -134,8 +133,8 @@ listings %>%
 
 # What's the average price per person to stay at an AirBnB in Boston? Let's see how to construct a simple summary table in which we'll display the average rating and price-per-guest by neighborhood. We can use the accommodates field as a simple estimate of how many people can fit in a listing. 
 
-listings %>% 
-	mutate(price_per = price / accommodates)
+  listings %>% 
+  	mutate(price_per = price / accommodates)
 
 # Next, let's summarise() the results by computing the average: 
 
@@ -212,7 +211,7 @@ summary_table <- listings %>%
 ranked_summary_table <- summary_table %>% 
 	mutate(rank = min_rank(desc(n))) %>% 
 	filter(rank <= 3) %>% 
-	arrange(neighbourhood, rank)
+	arrange(neighbourhood, desc(rank))
 
 # -----------------------------------------------------------------
 # RELATIONAL DATA

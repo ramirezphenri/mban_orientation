@@ -1,0 +1,52 @@
+---
+title: "Test - Orientation"
+author: "Pierre-Henri"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    theme: united
+---
+
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(lubridate)
+```
+
+```{r data_prep}
+# put your data preparation code here. To get you started, the data preparation we performed in the session previously has already been pasted in. Feel free to add any additional data preparation code needed for your visualizations
+
+listings <- read_csv('../../data/listings.csv')
+calendar <- read_csv('../../data/calendar.csv')
+
+source("clean_prices.R")
+listings <- clean_prices(listings)
+calendar <- clean_prices(calendar)
+```
+# A First Tab
+Column {data-width=350}
+#### A little stat
+
+
+```{r neighbourhood}
+listings %>% group_by(neighbourhood) %>% 
+  summarise(avg_review_score = mean(review_scores_value, na.rm=TRUE)) %>%
+  ggplot() +
+  aes(x=neighbourhood, y=avg_review_score) +
+  geom_bar(stat='identity') +
+  coord_flip()
+```
+
+Column {data-width=650}
+### Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+# A Second Tab
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

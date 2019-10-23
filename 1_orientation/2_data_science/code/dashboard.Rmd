@@ -49,6 +49,7 @@ calendar <- clean_prices(calendar)
 Column {data-width=650}
 -----------------------------------------------------------------------
 
+
 ### A map! 
 
 ```{r box_1}

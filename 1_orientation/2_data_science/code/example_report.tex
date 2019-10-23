@@ -1,0 +1,335 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Introduction to R Markdown},
+            pdfauthor={Phil Chodrow},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Introduction to R Markdown}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Phil Chodrow}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{Tuesday, August 27th, 2019}
+
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\hypertarget{literate-programming}{%
+\section{Literate Programming}\label{literate-programming}}
+
+When doing analysis, we typically generate code, plots, explanatory
+text, narrative text, and other artifacts. The idea of \textbf{literate
+programming} is simple:
+
+\begin{quote}
+Put analysis code, outputs, and text the \emph{same document}, and then
+get different \emph{views} of that document according to the appropriate
+audience.
+\end{quote}
+
+\hypertarget{markdown}{%
+\section{Markdown}\label{markdown}}
+
+Markdown is a simple language invented by
+\href{https://daringfireball.net/projects/markdown/}{John Gruber}.
+Originally, the purpose of Markdown was to easily generate webpages and
+blog posts without the need for writing complex HTML. Markdown's primary
+strength is the display of simple text, but there are lots of options:
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{Italic} and \textbf{bold} typfaces.
+\item
+  Section headers like the one above this list, delimited using \#.
+\item
+  Especially important for our purposes, the inclusion of images (such
+  as statistical graphics), as well as advanced HTML objects
+  (interactive maps, for example).
+\item
+  Code display
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{print}\NormalTok{(}\StringTok{"Hello World!"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+To write in Markdown, open any text editor (RStudio works great!) and
+start writing! There are lots of great Markdown references online.
+
+\hypertarget{r-markdown}{%
+\section{R Markdown}\label{r-markdown}}
+
+Markdown itself is extremely useful, but R Markdown is something
+especially magical. R Markdown implements the literate programming
+paradigm by enabling you to smoothly intersperse code, outputs like
+tables and graphics, and expository text all in the same document. Let's
+run some simple examples. First, we'll make a code chunk and load the
+data set.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\KeywordTok{library}\NormalTok{(knitr)}
+\NormalTok{df <-}\StringTok{ }\KeywordTok{read_csv}\NormalTok{(}\StringTok{'../../data/listings.csv'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{peeking-at-data}{%
+\subsection{Peeking at Data}\label{peeking-at-data}}
+
+For a start, we can embed views of our data. Let's look at the 10
+lowest-rated listings.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{select}\NormalTok{(name, neighbourhood, review_scores_rating) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(review_scores_rating) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{head}\NormalTok{(}\DecValTok{10}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 10 x 3
+##    name                                  neighbourhood   review_scores_rat~
+##    <chr>                                 <chr>                        <dbl>
+##  1 near BC shuttle house summer sublet   Allston-Bright~                 20
+##  2 High-End 2-BR Furnished Apartment *F~ Fenway/Kenmore                  20
+##  3 Beautifully Furnished 1-BR in Boston~ West End                        20
+##  4 BOSTON Private Room/ #2 Modern/Cozy ~ Mattapan                        20
+##  5 Lux 2BR 2BA Apt w/rooftop deck, gym,~ Mission Hill                    20
+##  6 Lux 2BR 2BA Apt w/rooftop deck, gym,~ Mission Hill                    20
+##  7 New Heart of The North End One BR Du~ North End                       20
+##  8 Sweetheart of The North End 2 Bedroo~ North End                       20
+##  9 Room for Rent in Allston near Green ~ Allston-Bright~                 20
+## 10 Boston/Fort Hill - Bedroom in Beauti~ Roxbury                         20
+\end{verbatim}
+
+This is the magic of R Markdown: anything you can do in \texttt{R}, you
+can execute, visualize, and explain in the same document.
+
+\hypertarget{inline-computations}{%
+\subsection{Inline computations}\label{inline-computations}}
+
+As you are crafting expository text, you might wish to reference a given
+number or name from the code. For example, when describing the data set,
+you might run \texttt{nrow(df)} and \texttt{ncol(df)} and then manually
+write in the answers:
+
+\begin{quote}
+The data has 6264 rows and 106 columns.
+\end{quote}
+
+Of course, that's correct all on its own, but\ldots{}what happens when
+you get an updated data set from your collaborators? (This actually
+happened to me: we updated the data set this year.) Think you're going
+to remember to correct the manually-typed number in all your documents?
+Try this instead:
+
+\begin{quote}
+The data set has \texttt{6264} rows and \texttt{106} columns.
+\end{quote}
+
+RMarkdown gives you the ability to neatly insert the results of your
+computation into your document. This can get very handy when you want to
+include slightly more complex descriptions:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{top_rated_neighborhood <-}\StringTok{ }\NormalTok{df }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(neighbourhood) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{review_scores_rating =} \KeywordTok{mean}\NormalTok{(review_scores_rating, }\DataTypeTok{na.rm =}\NormalTok{ T)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(review_scores_rating))}
+\end{Highlighting}
+\end{Shaded}
+
+There are \texttt{30} neighborhoods represented in the data set. Of
+these, the highest rated is \texttt{Chestnut\ Hill}. This analysis is
+current as of \texttt{2019-08-27}
+
+\hypertarget{graphics}{%
+\subsection{Graphics}\label{graphics}}
+
+Of course, the main event here is graphics. Any graphics you can
+generate in \texttt{R} go seamlessly into your reporting.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{top_rated_neighborhood }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{neighbourhood =} \KeywordTok{factor}\NormalTok{(neighbourhood, }\DataTypeTok{levels =}\NormalTok{ .}\OperatorTok{$}\NormalTok{neighbourhood)) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ neighbourhood, }\DataTypeTok{y =}\NormalTok{ review_scores_rating) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat =} \StringTok{'identity'}\NormalTok{) }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{coord_flip}\NormalTok{() }\OperatorTok{+}\StringTok{ }
+\StringTok{  }\KeywordTok{theme_bw}\NormalTok{() }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 1 rows containing missing values (position_stack).
+\end{verbatim}
+
+\includegraphics{example_report_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+\hypertarget{math-and-code}{%
+\subsection{Math and Code}\label{math-and-code}}
+
+RMarkdown is well-integrated with MathJax, which allows you to write
+\(\LaTeX\)-style mathematics within your document.
+
+\[f(\beta) \triangleq \lVert \mathbf{y} - \mathbf{X}\beta \rVert_2^2\]
+
+You can display and even execute code -- \texttt{R} is included, of
+course, but how about this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ sys}
+\BuiltInTok{print}\NormalTok{(}\StringTok{"This is Python "} \OperatorTok{+}\NormalTok{ sys.version)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## This is Python 2.7.10 (default, Feb 22 2019, 21:55:15) 
+## [GCC 4.2.1 Compatible Apple LLVM 10.0.1 (clang-1001.0.37.14)]
+\end{verbatim}
+
+\hypertarget{resources}{%
+\section{Resources}\label{resources}}
+
+\begin{itemize}
+\tightlist
+\item
+  The \href{https://rmarkdown.rstudio.com/}{R Markdown website},
+  including documentation for reports, slides, dashboards, and more.
+\item
+  \href{https://rmarkdown.rstudio.com/flexdashboard/index.html}{Flexdashboard
+  reference} for working on your project presentations.
+\item
+  \href{https://en.wikipedia.org/wiki/Literate_programming}{Introduction
+  to literate programming}
+\end{itemize}
+
+
+\end{document}

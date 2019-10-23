@@ -1,23 +1,64 @@
 ---
 title: "Introduction to R Markdown"
-author: Phil Chodrow
-date: Tuesday, August 27th, 2019
-output: 
+author: "Phil Chodrow"
+date: "Tuesday, August 27th, 2019"
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
   html_document:
+    number_sections: yes
     theme: united
-    number_sections: true
-    toc: true
+    toc: yes
     toc_depth: 2
-    toc_float: 
-      collapsed: false
+    toc_float:
+      collapsed: no
 ---
 
-# Literate Programming
+```{r data_prep}
+# put your data preparation code here. To get you started, the data preparation we performed in the session previously has already been pasted in. Feel free to add any additional data preparation code needed for your visualizations
 
-When doing analysis, we typically generate code, plots, explanatory text, narrative text, and other artifacts. The idea of **literate programming** is simple: 
+listings <- read_csv('../../data/listings.csv')
+calendar <- read_csv('../../data/calendar.csv')
+
+source("clean_prices.R")
+listings <- clean_prices(listings)
+calendar <- clean_prices(calendar)
+```
+
+# Average availability
+
+One indicator which we thought of is the average availability. Indeed, the locations in the most wanted neighbourhoods will be more demanded than the others. Making the inverse of the availability a good indicator of neighbourhoods' attractiveness. Find below the top five neighbourhoods in terms of that indicator :
+
+
 
 > Put analysis code, outputs, and text the *same document*, and then get different *views* of that document according to the appropriate audience.  
 
+```{r data_prep}
+
+listings %>%
+  left_join(calendar,
+            by = c('id' = 'listing_id'))%>%
+  group_by(neighbourhood) %>%
+  summarise(avg_scores_location = n()) %>%
+  arrange((desc(avg_scores_location)))%>%
+  head(30)
+
+
+```
+
+```{r data_prep}
+
+listings %>%
+  left_join(calendar,
+            by = c('id' = 'listing_id'))%>%
+  group_by(neighbourhood) %>%
+  summarise(avg_scores_location = mean(review_scores_location, na.rm = T), number_locations=n()) %>%
+  arrange((desc(avg_scores_location)), desc(number_locations))%>%
+  head(5)
+
+```
+Above, we would recommend Financial District and the Government Center. According to the average score location given by the renters. As there are many equal to 10, the maximum, we discriminate by the number of locations, which describes the weigh of the meaning of these scores. 
 # Markdown
 
 Markdown is a simple language invented by [John Gruber](https://daringfireball.net/projects/markdown/). Originally, the purpose of Markdown was to easily generate webpages and blog posts without the need for writing complex HTML. Markdown's primary strength is the display of simple text, but there are lots of options: 

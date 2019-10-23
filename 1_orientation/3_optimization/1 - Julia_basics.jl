@@ -49,6 +49,7 @@ v .+ 1
 
 # editing arrays
 push!(v,2)
+pop(v)
 
 # array comparisons
 v==1
